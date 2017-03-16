@@ -10,7 +10,8 @@
 %% ===================================================================
 
 start(_StartType, _StartArgs) ->
-    ptest_sup:start_link().
+	inets:start(),
+	ptest_sup:start_link().
 
 stop(_State) ->
     ok.

@@ -70,8 +70,11 @@ code_change(_OldVsn, State, _Extra) ->
 
 do_http_req(Url) ->
 	Headers = [{"AccessToken", "A6E56CD1-B178-8B82-E6E0-02DCF13D7A25"}],
-	case httpc:request(get, {Url, Headers, "application/x-www-form-urlencoded", ""}, [{timeout, 30000}], []) of
-		{ok, {_, _, Body}} ->
-			{ok, Body};
-		_X -> {error, usercenter_error}
-	end.
+	V = httpc:request(Url),
+	io:format("http : ~p",[V]),
+	ok.
+%%	case httpc:request(post, {Url, Headers, "application/x-www-form-urlencoded", ""}, [{timeout, 30000}], []) of
+%%		{ok, {_, _, Body}} ->
+%%			{ok, Body};
+%%		_X -> {error, usercenter_error}
+%%	end.
