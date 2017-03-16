@@ -42,6 +42,9 @@ endif
 all:compile
 	true
 
+thrift:
+	git clone https://github.com/apache/thrift.git
+
 # 获取到所有的依赖
 deps:
 	$(REBAR) get-deps
