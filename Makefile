@@ -3,7 +3,7 @@ LOAD_PATH = \
 	deps/*/ebin \
 	$(NULL)
 
-NODE = localhost@127.0.0.1
+NODE = one@127.0.0.1
 #NODE=$(shell cat ./config/node_name.conf)
 RANDOM_VAL=$(shell od -An -N1 -i /dev/random | head -1 | awk '{print $$1}' )
 
@@ -56,10 +56,10 @@ erl:
 
 
 s:
-	erl $(OPTS)  -name $(NODE) -s ptest -hidden
+	erl $(OPTS)  -name $(NODE) -eval "application:start(ptest)" -hidden
 
 start:
-	erl $(OPTS)  -detached -name $(NODE) -s ptest -hidden
+	erl $(OPTS)  -detached -name $(NODE) -eval "application:start(ptest)" -hidden
 
 
 stop:
