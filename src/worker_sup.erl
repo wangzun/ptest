@@ -1,19 +1,23 @@
--module(ptest_sup).
+-module(worker_sup).
 
 -behaviour(supervisor).
 
 %% API
--export([start_link/0]).
+-export([start_link/0,start_child/1]).
 
 %% Supervisor callbacks
 -export([init/1]).
 
 %% Helper macro for declaring children of supervisor
--define(CHILD1(I, Type,Args), {I, {I, start_link, [Args]}, permanent, 5000, Type, [I]}).
--define(CHILD2(I, Type), {I, {I, start_link, []}, permanent, 5000, Type, [I]}).
+
+-define(SERVER,worker_sup).
+
 %% ===================================================================
 %% API functions
 %% ===================================================================
+
+start_child(Args) ->
+  supervisor:start_child(?SERVER, [Args]).
 
 start_link() ->
     supervisor:start_link({local, ?MODULE}, ?MODULE, []).
@@ -23,8 +27,5 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
-	Args = {"http://120.24.163.94:9099/",1000,10},
-	{ok, { {one_for_one, 5, 10},
-	       [?CHILD2(worker_sup,worker),
-		?CHILD1(ptest_init,worker,Args)]} }.
-
+    {ok, { {one_for_one, 5, 10}, []} }.
+	

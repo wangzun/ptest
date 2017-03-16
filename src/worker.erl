@@ -2,10 +2,9 @@
 %% create time : error
 %% create by rebar
 %% @author wangzun <wangzun0009@gmail.com>
-%% @doc start and stop ptest_init
 %% -----------------------------------------------------------------
 
--module(ptest_init).
+-module(worker).
 -behaviour(gen_server).
 -define(SERVER, ?MODULE).
 
@@ -23,7 +22,7 @@
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2,
 	 terminate/2, code_change/3]).
 
--record(state,{url,time,num}).
+-record(state,{url,time}).
 
 %% ------------------------------------------------------------------
 %% API Function Definitions
@@ -39,17 +38,22 @@ start_link() ->
 %% ------------------------------------------------------------------
 
 init([Args]) ->
-	io:format("~p",[Args]),
-
-	{Url,Time,Num} = Args,
-	do_init_worker(Url,Time,Num),
-	{ok, #state{url=Url,time=Time,num=Num}}.
+	{Url,Time}=Args,
+	{ok,#state{url=Url,time=Time},Time}.
 
 handle_call(_Request, _From, State) ->
 	{reply, ok, State}.
 
 handle_cast(_Msg, State) ->
 	{noreply, State}.
+
+handle_info(timeout, State) ->
+	#state{url=Url,time=Time}=State,
+	case catch do_http_req(Url) of
+		Catch ->
+			io:format("catch : ~p",[Catch])
+	end,
+	{noreply, State,Time};
 
 handle_info(_Info, State) ->
 	{noreply, State}.
@@ -64,18 +68,10 @@ code_change(_OldVsn, State, _Extra) ->
 %% Internal Function Definitions
 %% ------------------------------------------------------------------
 
-
-do_init_worker(Url,Time,Num) ->
-	lists:foreach(
-	  fun(Index) ->
-			  Param = 
-			  {get_name(Index),{worker, start_link, [{Url,Time}]},
-			   transient, 2000, worker, []},
-			  case catch  supervisor:start_child(worker_sup, Param) of
-				  A ->
-					  io:format("catch : ~p",[A])
-			  end
-	  end,lists:seq(1,Num)).
-
-get_name(Index) ->
-	"worker"++ integer_to_list(Index).
+do_http_req(Url) ->
+	Headers = [{"AccessToken", "A6E56CD1-B178-8B82-E6E0-02DCF13D7A25"}],
+	case httpc:request(get, {Url, Headers, "application/x-www-form-urlencoded", ""}, [{timeout, 30000}], []) of
+		{ok, {_, _, Body}} ->
+			{ok, Body};
+		_X -> {error, usercenter_error}
+	end.
