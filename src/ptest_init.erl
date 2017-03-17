@@ -42,7 +42,7 @@ init([Args]) ->
 	io:format("~p",[Args]),
 
 	{Url,Time,Num} = Args,
-	do_init_worker(Url,Time,Num),
+	%%do_init_worker(Url,Time,Num),
 	{ok, #state{url=Url,time=Time,num=Num}}.
 
 handle_call(_Request, _From, State) ->
