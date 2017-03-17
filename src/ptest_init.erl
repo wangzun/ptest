@@ -73,7 +73,7 @@ do_init_worker(Url,Time,Num) ->
 			   transient, 2000, worker, []},
 			  case catch  supervisor:start_child(worker_sup, Param) of
 				  A ->
-					  io:format("catch : ~p",[A])
+					  ok
 			  end
 	  end,lists:seq(1,Num)).
 
