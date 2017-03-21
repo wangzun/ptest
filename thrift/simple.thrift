@@ -9,7 +9,6 @@ struct Person{
     4:list<string> groups,
     5:i32 age,
     6:Location location,
-    7:map<i32, i32> acts,
 }
 
 

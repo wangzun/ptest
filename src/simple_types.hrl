@@ -13,7 +13,6 @@
                  phone_number :: string() | binary(),
                  groups :: list(),
                  age :: integer(),
-                 location :: #location{},
-                 acts :: dict:dict()}).
+                 location :: #location{}}).
 
 -endif.

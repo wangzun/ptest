@@ -21,8 +21,7 @@ struct_info('person') ->
           {3, string},
           {4, {list, string}},
           {5, i32},
-          {6, {struct, {'simple_types', 'location'}}},
-          {7, {map, i32, i32}}]}
+          {6, {struct, {'simple_types', 'location'}}}]}
 ;
 
 struct_info('i am a dummy struct') -> undefined.
@@ -38,8 +37,7 @@ struct_info_ext('person') ->
           {3, undefined, string, 'phone_number', undefined},
           {4, undefined, {list, string}, 'groups', []},
           {5, undefined, i32, 'age', undefined},
-          {6, undefined, {struct, {'simple_types', 'location'}}, 'location', #location{}},
-          {7, undefined, {map, i32, i32}, 'acts', dict:new()}]}
+          {6, undefined, {struct, {'simple_types', 'location'}}, 'location', #location{}}]}
 ;
 
 struct_info_ext('i am a dummy struct') -> undefined.

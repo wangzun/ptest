@@ -4,5 +4,6 @@
 -export([start/0]).
 
 start() ->
-	ok.
+	Data = test_data:original(),
+	thrift:encode(Data).
 
