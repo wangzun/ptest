@@ -1,6 +1,7 @@
 -module(test_data).
 
--export([original/0,
+-export([start/0,
+	 original/0,
 	count_func/2]).
 
 list_data(Num) ->
@@ -21,3 +22,15 @@ count_func(Func,Num) ->
 			  end,lists:seq(1,Num))
 	end,
 	timer:tc(Func1).
+
+start() ->
+	Data = original(),
+	B = term_to_binary(Data),
+	Size = erlang:byte_size(B),
+	Fun1 = fun() -> term_to_binary(Data) end, 
+	Fun2 = fun() -> binary_to_term(B) end, 
+	{Time,_}= test_data:count_func(Fun1,100),
+	{Time1,_}= test_data:count_func(Fun2,100),
+	io:format("erlang encode binanry size : ~p   encode time : ~p  decode time : ~p",[Size,Time,Time1]).
+
+
