@@ -1,6 +1,5 @@
 ebin/
 deps/
-thrift/
 .rebar/
 erl_crash.dump
 log/

@@ -11,6 +11,7 @@ ifeq ($(NODE),)
 	NODE = ptest@127.0.0.1
 endif
 
+SED_CMD=sed -i '.bak' 's/dict/dict:dict/g' src/simple_types.hrl
 COOKIE=4SZe3DECXwAdHbz0Yzm7rWrc5AG0MjiSs90WGgsfXJ3Mx0tLuEXtfa9ud3ZOOSQ
 MASH_NODE=mash_$(RANDOM_VAL)_$(NODE)
 # 部分配置参数
@@ -30,6 +31,7 @@ OPTS = \
 # erl_call
 ERL_CALL=erl_call -c $(COOKIE) -name $(NODE) -e
 
+THRIFT= ./bin/thrift
 # rebar-用于编译
 REBAR := ./bin/rebar --config config/rebar.config
 UNAME := $(shell uname)
@@ -41,9 +43,6 @@ endif
 # 编译全部
 all:compile
 	true
-
-thrift:
-	git clone https://github.com/apache/thrift.git
 
 # 获取到所有的依赖
 deps:
@@ -77,5 +76,11 @@ remsh:
 
 mkserver:
 	$(REBAR) create template=simplesrv srvid=src/$(SNAME)
+
+g:
+	$(THRIFT) -gen erl -out src thrift/simple.thrift
+
+	$(SED_CMD)
+	
 
 .PHONY:deps
