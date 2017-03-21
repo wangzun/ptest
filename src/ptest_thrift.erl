@@ -5,5 +5,6 @@
 
 start() ->
 	Data = test_data:original(),
-	thrift:encode(Data).
+	{ok,B}= thrift:encode(Data),
+	erlang:byte_size(list_to_binary(B)).
 
