@@ -2,7 +2,19 @@
 
 -export([start/0,
 	 original/0,
+	 kv_data/0,
 	count_func/2]).
+
+kv_data() ->
+	{[
+	  {<<"type">>, <<"workers">>},
+	  {<<"data">>,
+	   [
+	    {[{<<"workerid">>, <<"std.1">>},{<<"slots">>, []}]}
+	   ]
+	  }
+	 ]}.
+
 
 list_data(Num) ->
 	lists:map(
@@ -11,7 +23,7 @@ list_data(Num) ->
 	  end,lists:seq(1,Num)).
 
 original() ->
-	{person,"wangzun","fsfaef83rsfs322g33dd","34242555",list_data(100000),12,{location,"fasfsfaf","fafsaa"}}.
+	{person,"wangzun","fsfaef83rsfs322g33dd","34242555",list_data(10),12,{location,"fasfsfaf","fafsaa"}}.
 
 count_func(Func,Num) ->
 	Func1 =
