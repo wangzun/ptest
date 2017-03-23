@@ -81,6 +81,10 @@ g:
 	$(THRIFT) -gen erl -out src thrift/simple.thrift
 
 	$(SED_CMD)
+
+p:
+	cd script
+	ruby protocal_generater.rb
 	
 
 .PHONY:deps

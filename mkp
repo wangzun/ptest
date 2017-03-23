@@ -1,0 +1,5 @@
+#!/bin/sh
+cd script
+ruby protocal_generater.rb
+cd ..
+make g

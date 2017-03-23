@@ -1,0 +1,11 @@
+# 格式说明=
+# 客户端请求名_req结束.
+# 服务端回复包_ack结束.
+# 服务端通知包_ntf结束.
+
+packet_type:10000
+name:person_req
+payload:person
+desc:test.
+
+

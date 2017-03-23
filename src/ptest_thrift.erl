@@ -11,5 +11,5 @@ start() ->
 	Fun2 = fun() -> thrift:decode(B) end, 
 	{Time,_}= test_data:count_func(Fun1,100),
 	{Time1,_}= test_data:count_func(Fun2,100),
-	io:format("thrift encode binanry size : ~p   encode time : ~p  decode time : ~p",[Size,Time,Time1]).
+	io:format("binanry size : ~p   encode time : ~p  decode time : ~p~n",[Size,Time,Time1]).
 
