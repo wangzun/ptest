@@ -3,7 +3,7 @@
 -export([start/0]).
 
 start() ->
-	protobuffs_compile:scan_file("proto/simple.proto"),
+	protobuffs_compile:scan_file("proto/simple.proto",[{output_include_dir,"include/"},{output_ebin_dir,"ebin/"}]),
 	Data = test_data:original(),
         B = simple_pb:encode(Data),
 	B1 =  list_to_binary(B),
