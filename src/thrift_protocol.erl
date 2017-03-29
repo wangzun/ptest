@@ -322,10 +322,11 @@ write(Proto0, {{list, Type}, Data})
       etype = term_to_typeid(Type),
       size = length(Data)
     }),
-  Proto2 = lists:foldl(fun(Elem, ProtoIn) ->
-    {ProtoOut, ok} = write(ProtoIn, {Type, Elem}),
-    ProtoOut
-                       end,
+  Proto2 = lists:foldl(
+    fun(Elem, ProtoIn) ->
+      {ProtoOut, ok} = write(ProtoIn, {Type, Elem}),
+      ProtoOut
+    end,
     Proto1,
     Data),
   {Proto3, ok} = write(Proto2, list_end),
